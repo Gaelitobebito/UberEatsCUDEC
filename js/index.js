@@ -10,9 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   M.Sidenav.init(forms, {edge: 'left'});
 });
 
-btnAgregarPlatillo.addEventListener('click', function() {
-  alert('Platillo Agregado');
-});
+
 
 function mostrarPlatillos(platillo,id) {
   contenido += `
