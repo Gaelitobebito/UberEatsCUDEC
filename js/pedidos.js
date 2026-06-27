@@ -23,3 +23,5 @@ function agregarALista(platillo, id) {
     </option>`;
     document.getElementById("Listar Platillos").innerHTML = contenidoLista;
 }
+
+M.AutoInit();
