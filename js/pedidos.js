@@ -25,3 +25,20 @@ function agregarALista(platillo, id) {
 }
 
 M.AutoInit();
+
+document.getElementById("btnUbicacion").addEventListener("click", function() {
+        if (navigator.geolocation) {
+        navigation.geolocation.getCurrentPosition(exito, error);
+        }
+    });
+
+    function exito(posicion) {
+        alert(posicion.coords.latitude + ", " +
+            posicion.coords.longitude);
+
+    }
+
+     function error() {
+        alert("No se pudo obtener la ubicación exacta");
+     }
+            
