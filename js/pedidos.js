@@ -1,44 +1,130 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const menus = document.querySelectorAll('.side-menu');
-  M.Sidenav.init(menus, {edge: 'right'});
-  
+
+    const menus = document.querySelectorAll('.side-menu');
+
+    M.Sidenav.init(menus, {
+        edge: 'right'
+    });
+
+
+    const selects = document.querySelectorAll('select');
+
+    M.FormSelect.init(selects);
+
 });
 
-let contenidoLista = '';
+
+
+let contenidoLista = "";
+
+
 
 db.collection("platillos").onSnapshot((datos) => {
-    datos.docChanges().forEach((registro) => {
-        if (registro.type === "added") {
-            agregarALista(registro.doc.data(), registro.doc.id);
-        }
+
+
+    contenidoLista = `
+        <option value="" disabled selected>
+            Seleccione un Platillo
+        </option>
+    `;
+
+
+    datos.forEach((doc) => {
+
+
+        const platillo = doc.data();
+
+
+        contenidoLista += `
+
+            <option value="${doc.id}">
+                ${platillo.nombre}
+            </option>
+
+        `;
+
+
     });
-    var elems = document.querySelectorAll('select');
+
+
+
+    document.getElementById("Platillo")
+    .innerHTML = contenidoLista;
+
+
+
+    const elems = document.querySelectorAll('select');
+
     M.FormSelect.init(elems);
+
+
 });
 
 
-function agregarALista(platillo, id) {
-    contenidoLista += `<option value='{id}'>
-    ${platillo.nombre}
-    </option>`;
-    document.getElementById("Listar Platillos").innerHTML = contenidoLista;
-}
 
-M.AutoInit();
 
-document.getElementById("btnUbicacion").addEventListener("click", function() {
-        if (navigator.geolocation) {
-        navigation.geolocation.getCurrentPosition(exito, error);
-        }
-    });
 
-    function exito(posicion) {
-        alert(posicion.coords.latitude + ", " +
-            posicion.coords.longitude);
+document.getElementById("btnUbicacion")
+.addEventListener("click", function(){
+
+
+    if(navigator.geolocation){
+
+
+        navigator.geolocation
+        .getCurrentPosition(exito, error);
+
+
+    }else{
+
+
+        alert("La ubicación no está disponible");
+
 
     }
 
-     function error() {
-        alert("No se pudo obtener la ubicación exacta");
-     }
-            
+
+});
+
+
+
+
+
+function exito(posicion){
+
+
+    const latitud = posicion.coords.latitude;
+    const longitud = posicion.coords.longitude;
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json`, {
+        headers: {
+            'User-Agent': 'UberEatsCudecGaelCM (gaelit00.cm@gmail.com)'
+        }
+    })
+
+    .then(respuesta => respuesta.json())
+    .then(data => {
+        let ciudad = data.address.city;
+        let pais = data.address.country;
+        document.getElementById("Ubicación").value = `${ciudad}, ${pais}`;
+    })
+
+    alert(
+        "Latitud: " + latitud +
+        "\nLongitud: " + longitud
+    );
+
+
+}
+
+
+
+
+function error(){
+
+
+    alert(
+        "No se pudo obtener la ubicación exacta"
+    );
+
+
+}   

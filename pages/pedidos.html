@@ -1,184 +1,479 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>La Noria</title>
+<html lang="es">
 
-  <!-- Materialize CSS -->
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>La Noria - Pedidos</title>
+
+
   <link rel="stylesheet" href="/css/materialize.min.css">
+
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <link rel="stylesheet" href="/css/styles.css">
 
-  <!-- Materialize JS -->
+
   <script src="/js/materialize.min.js"></script>
+
+
 </head>
+
 
 <body class="grey lighten-4">
 
-  <!-- Barra de navegación -->
-  <nav class="z-depth-0">
-    <div class="nav-wrapper container">
-      <a href="/">La Noria</a>
 
-      <span class="right grey-text text-darken-1">
-        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
-      </span>
-    </div>
-  </nav>
 
-  <!-- Menú lateral -->
-  <ul id="side-menu" class="sidenav side-menu">
-    <li><a class="subheader">La Noria</a></li>
-    <li><a href="/" class="waves-effect">Home</a></li>
-    <li><a href="/pages/about.html" class="waves-effect">About</a></li>
+<nav class="z-depth-0">
 
-    <li><div class="divider"></div></li>
+  <div class="nav-wrapper container">
 
-    <li>
-      <a href="/pages/contact.html" class="waves-effect">
-        <i class="material-icons">mail_outline</i>Contact
-      </a>
-    </li>
-  </ul>
 
-  <!-- Contenido -->
-  <div class="container grey-text">
+    <a href="/">
+      La Noria
+    </a>
 
-    <div class="card-panel">
 
-      <h5 class="center">Pedido de Platillo</h5>
+    <span class="right grey-text text-darken-1">
 
-      <!-- Nombre -->
-      <div class="input-field">
-        <input type="text" id="nombre">
-        <label for="nombre">Nombre de la persona</label>
-      </div>
+      <i class="material-icons sidenav-trigger"
+      data-target="side-menu">
+        menu
+      </i>
 
-      <!-- Dirección -->
-      <div class="input-field">
-        <input type="text" id="direccion">
-        <label for="direccion">Dirección</label>
-      </div>
+    </span>
 
-      <!-- Platillo -->
-      <div class="input-field">
-        <select id="Platillo">
-          <option value="" disabled selected>Seleccione un Platillo</option>
-          <option value="Tacos">Tacos</option>
-          <option value="Burrito">Burrito</option>
-          <option value="Hamburguesa">Hamburguesa</option>
-        </select>
-        <label>Platillo</label>
-      </div>
-
-      <div class="center">
-
-        <button id="btnGuardar" class="btn green waves-effect">
-          <i class="material-icons left">save</i>
-          Guardar
-        </button>
-
-        <button id="btnCancelar" class="btn red waves-effect">
-          <i class="material-icons left">cancel</i>
-          Cancelar
-        </button>
-
-      </div>
-
-    </div>
-    <button id="btnUbicacion">Ubicacion</button>
 
   </div>
 
 
+</nav>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
 
-  <!-- Configuración Firebase -->
-  <script src="/js/firebase.js"></script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
 
-      // Inicializar Materialize
-      var elems = document.querySelectorAll('select');
-      M.FormSelect.init(elems);
 
-      // Controles
-      const nombre = document.getElementById("nombre");
-      const direccion = document.getElementById("direccion");
-      const platillo = document.getElementById("Platillo");
-      const guardar = document.getElementById("btnGuardar");
-      const cancelar = document.getElementById("btnCancelar");
+<ul id="side-menu" class="sidenav side-menu">
 
-      // Guardar en Firestore
-      guardar.addEventListener("click", function () {
 
-        if (nombre.value.trim() == "") {
-          M.toast({html: "Ingrese el nombre"});
-          return;
-        }
+  <li>
+    <a class="subheader">
+      La Noria
+    </a>
+  </li>
 
-        if (direccion.value.trim() == "") {
-          M.toast({html: "Ingrese la dirección"});
-          return;
-        }
 
-        if (platillo.value == "") {
-          M.toast({html: "Seleccione un platillo"});
-          return;
-        }
+  <li>
+    <a href="/" class="waves-effect">
+      Inicio
+    </a>
+  </li>
 
-        db.collection("Pedidos").add({
-          nombre: nombre.value.trim(),
-          direccion: direccion.value.trim(),
-          platillo: platillo.value,
-          fecha: new Date()
-        })
-        .then(function () {
 
-          M.toast({html: "Pedido guardado correctamente"});
+  <li>
+    <a href="/pages/pedidos.html" class="waves-effect">
+      Pedidos
+    </a>
+  </li>
 
-          // Limpiar campos
-          nombre.value = "";
-          direccion.value = "";
-          platillo.selectedIndex = 0;
 
-          M.updateTextFields();
-          M.FormSelect.init(document.querySelectorAll('select'));
+  <li>
+    <a href="/pages/about.html" class="waves-effect">
+      Acerca
+    </a>
+  </li>
 
-        })
-        .catch(function (error) {
 
-          console.log(error);
-          M.toast({html: "Error al guardar"});
+  <li>
+    <div class="divider"></div>
+  </li>
 
-        });
 
-      });
+  <li>
 
-      // Cancelar
-      cancelar.addEventListener("click", function () {
+    <a href="/pages/contact.html" class="waves-effect">
 
-        nombre.value = "";
-        direccion.value = "";
-        platillo.selectedIndex = 0;
+      <i class="material-icons">
+        mail_outline
+      </i>
 
-        M.updateTextFields();
-        M.FormSelect.init(document.querySelectorAll('select'));
+      Contacto
 
-        M.toast({html: "Operación cancelada"});
+    </a>
 
-      });
+  </li>
 
-    });
-  </script>
+
+</ul>
+
+
+
+
+
+
+
+<div class="container grey-text">
+
+
+<div class="card-panel">
+
+
+<h5 class="center">
+  Pedido de Platillo
+</h5>
+
+
+
+
+
+<div class="input-field">
+
+
+<input type="text" id="nombre">
+
+
+<label for="nombre">
+Nombre de la persona
+</label>
+
+
+</div>
+
+
+
+
+
+
+<div class="input-field">
+
+
+<input type="text" id="direccion">
+
+
+<label for="direccion">
+Dirección
+</label>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="input-field">
+
+
+<select id="Platillo">
+
+
+<option value="" disabled selected>
+
+Seleccione un Platillo
+
+</option>
+
+
+</select>
+
+
+<label>
+Platillo
+</label>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="center">
+
+
+<button id="btnGuardar" class="btn green waves-effect">
+
+<i class="material-icons left">
+save
+</i>
+
+Guardar
+
+</button>
+
+
+
+
+
+<button id="btnCancelar" class="btn red waves-effect">
+
+
+<i class="material-icons left">
+cancel
+</i>
+
+
+Cancelar
+
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<button id="btnUbicacion" class="btn blue">
+
+Ubicación
+
+</button>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Firebase -->
+
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
+
+
+
+
+
+<script src="/js/firebase.js"></script>
+
+<script src="/js/pedidos.js"></script>
+
+
+
+
+
+
+
+<script>
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+
+
+const nombre = document.getElementById("nombre");
+
+const direccion = document.getElementById("direccion");
+
+const platillo = document.getElementById("Platillo");
+
+const guardar = document.getElementById("btnGuardar");
+
+const cancelar = document.getElementById("btnCancelar");
+
+
+
+
+
+
+
+guardar.addEventListener("click", function(){
+
+
+
+if(nombre.value.trim()==""){
+
+M.toast({
+html:"Ingrese el nombre"
+});
+
+return;
+
+}
+
+
+
+
+
+if(direccion.value.trim()==""){
+
+
+M.toast({
+html:"Ingrese la dirección"
+});
+
+
+return;
+
+}
+
+
+
+
+
+
+
+if(platillo.value==""){
+
+
+M.toast({
+html:"Seleccione un platillo"
+});
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+db.collection("Pedidos").add({
+
+
+nombre: nombre.value.trim(),
+
+
+direccion: direccion.value.trim(),
+
+
+platillo: platillo.value,
+
+
+fecha: new Date()
+
+
+
+})
+
+
+
+.then(()=>{
+
+
+M.toast({
+
+html:"Pedido guardado correctamente"
+
+});
+
+
+
+nombre.value="";
+
+direccion.value="";
+
+
+platillo.selectedIndex=0;
+
+
+M.FormSelect.init(
+document.querySelectorAll("select")
+);
+
+
+
+})
+
+
+
+.catch(error=>{
+
+
+console.log(error);
+
+
+M.toast({
+
+html:"Error al guardar pedido"
+
+});
+
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+
+cancelar.addEventListener("click", function(){
+
+
+
+nombre.value="";
+
+
+direccion.value="";
+
+
+platillo.selectedIndex=0;
+
+
+
+M.toast({
+
+html:"Operación cancelada"
+
+});
+
+
+
+});
+
+
+
+
+
+});
+
+
+
+</script>
+
+
+
+
+
 
 </body>
+
 </html>
 
