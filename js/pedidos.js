@@ -105,8 +105,16 @@ function exito(posicion){
     .then(data => {
         let ciudad = data.address.city;
         let pais = data.address.country;
-        document.getElementById("Ubicación").value = `${ciudad}, ${pais}`;
+        document.getElementById("Ubicación").innerHTML = `${ciudad}, ${pais}`;
+        var map = L.map('mapa').setView([latitud, longitud], 13)
+        L.titleLayer('https://title.openstreetmap.org/{z}/{x}/{y}.pn    g', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        var marker = L.marker([51.5, -0.09]).addTo(map);
     })
+    .catch(error => console.error(error));
+
 
     alert(
         "Latitud: " + latitud +
